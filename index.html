@@ -1,61 +1,332 @@
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07111f">
-  <title>Beyond Horizons</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #07111f;
-      color: #f3f7ff;
-      font-family: Arial, sans-serif;
-    }
-    header {
-      padding: 22px;
-      border-bottom: 1px solid #24364b;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-    main {
-      min-height: 75vh;
-      display: grid;
-      place-content: center;
-      text-align: center;
-      padding: 24px;
-      background: radial-gradient(ellipse at top, #16445b, #07111f 65%);
-    }
-    h1 { font-size: clamp(34px, 8vw, 64px); margin-bottom: 12px; }
-    p { color: #b8c8dc; line-height: 1.6; }
-    button {
-      margin-top: 18px;
-      padding: 14px 24px;
-      background: #65e6c1;
-      color: #07111f;
-      border: 0;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-    footer { padding: 18px; text-align: center; color: #8295aa; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d16">
+<title>Beyond Horizons</title>
+<style>
+:root {
+  --bg:#080d16;--panel:#111a28;--panel2:#172437;
+  --line:#29394c;--text:#f3f7ff;--muted:#91a3b9;
+  --accent:#65e6c1;--gold:#ffcc66;--red:#ff647c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif;font-size:14px}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.app{max-width:1100px;margin:auto;min-height:100vh;padding-bottom:86px}
+header{height:66px;display:flex;align-items:center;justify-content:space-between;
+padding:0 18px;border-bottom:1px solid var(--line);background:#0b121e;
+position:sticky;top:0;z-index:5}
+.brand{font-size:17px;font-weight:900;letter-spacing:1.5px}
+.brand span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:9px}
+.coins{border:1px solid #665638;background:#292316;color:var(--gold);
+padding:9px 11px;border-radius:20px;font-weight:bold}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+background:linear-gradient(135deg,#65e6c1,#2878a7);color:#07111c;font-weight:900}
+main{padding:18px}
+.screen{display:none;animation:fade .2s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.eyebrow{color:var(--accent);font-size:10px;letter-spacing:2px;font-weight:bold}
+h1{font-size:clamp(29px,6vw,47px);line-height:1.05;margin:10px 0}
+h2{font-size:22px;margin:0 0 12px}
+h3{font-size:15px;margin:0 0 8px}
+p{color:var(--muted);line-height:1.55}
+.hero{position:relative;overflow:hidden;min-height:310px;padding:27px 22px;
+border:1px solid #29485b;border-radius:18px;
+background:radial-gradient(ellipse at 80% 25%,#236079 0,transparent 42%),
+linear-gradient(125deg,#142b40,#101b2a 52%,#182b35)}
+.hero:after{content:"";position:absolute;width:220px;height:220px;
+right:-60px;bottom:-105px;border:1px solid #72d9cf66;border-radius:50%;
+box-shadow:0 0 0 22px #65e6c10a,0 0 0 48px #65e6c10a}
+.hero-copy{position:relative;z-index:1;max-width:480px}
+.hero p{max-width:340px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{border:1px solid var(--line);border-radius:9px;padding:12px 16px;
+font-weight:bold;background:var(--panel2);color:var(--text)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#07131b}
+.btn.gold{background:#ffcc66;color:#201606;border-color:#ffcc66}
+.btn.danger{color:var(--red)}
+.btn.small{padding:8px 11px;font-size:12px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.section-head{display:flex;align-items:center;justify-content:space-between;
+gap:12px;margin:25px 0 12px}
+.section-head h2{margin:0}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;
+padding:15px;min-width:0}
+.mode-art{height:100px;border-radius:9px;margin-bottom:12px;
+display:grid;place-items:center;font-size:39px;
+background:radial-gradient(circle at 70% 30%,#3b7180,#152b3d 65%,#101827)}
+.mode-art.city{background:linear-gradient(135deg,#1a3a51,#101725)}
+.mode-art.survival{background:linear-gradient(135deg,#315143,#101c23)}
+.mode-art.arena{background:linear-gradient(135deg,#613b49,#1b1724)}
+.tag{display:inline-block;font-size:10px;color:var(--accent);
+background:#65e6c114;border:1px solid #65e6c144;border-radius:20px;padding:5px 8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
+.stat{background:var(--panel);border:1px solid var(--line);padding:13px 8px;
+border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:21px;margin-bottom:5px}
+.stat span{font-size:10px;color:var(--muted)}
+.progress{height:7px;background:#29374a;border-radius:9px;overflow:hidden;margin:10px 0}
+.progress span{display:block;height:100%;width:35%;background:var(--accent)}
+.row{display:flex;align-items:center;gap:12px}
+.row.between{justify-content:space-between}
+.row.wrap{flex-wrap:wrap}
+.row .grow{flex:1;min-width:0}
+.item-icon{width:54px;height:54px;border-radius:11px;display:grid;
+place-items:center;font-size:26px;background:#203348;flex-shrink:0}
+.feed-card{margin-bottom:13px}
+.feed-card .post{font-size:15px;color:var(--text)}
+.post-actions{display:flex;gap:9px;margin-top:12px}
+.post-actions .btn{flex:1}
+.field{width:100%;background:#0b1320;color:var(--text);
+border:1px solid var(--line);border-radius:8px;padding:12px;margin:7px 0 12px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:8;
+background:#0c1421f5;border-top:1px solid var(--line);
+display:flex;justify-content:center;padding:7px 4px max(7px,env(safe-area-inset-bottom))}
+.nav-inner{width:100%;max-width:700px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.nav-btn{background:transparent;border:0;color:var(--muted);border-radius:10px;
+padding:8px 2px;font-size:10px;display:grid;justify-items:center;gap:5px}
+.nav-btn .ico{font-size:21px}
+.nav-btn.active{background:#65e6c118;color:var(--accent)}
+.notice{border:1px solid #5a4c2d;background:#2b2518;color:var(--gold);
+padding:12px;border-radius:9px;line-height:1.5;margin:12px 0}
+.empty{padding:25px;text-align:center;border:1px dashed var(--line);
+border-radius:12px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.toggle{accent-color:var(--accent);width:20px;height:20px}
+.badge{font-size:10px;background:#24394a;padding:5px 8px;border-radius:20px;color:#c3d8eb}
+footer{text-align:center;color:#61738a;font-size:10px;padding:24px}
+@media(min-width:720px){
+ main{padding:28px}
+ .hero{min-height:350px;padding:38px}
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero-copy{padding-top:12px}
+}
+@media(max-width:380px){
+ main{padding:12px}
+ .hero{padding:19px}
+ .grid{gap:8px}
+ .card{padding:11px}
+ .brand{font-size:14px}
+}
+</style>
 </head>
 <body>
-  <header>BEYOND HORIZONS</header>
-  <main>
-    <div>
-      <p>ENTER A WORLD WITHOUT LIMITS</p>
-      <h1>Your horizon.<br>Your battle.</h1>
-      <p>Explore a new world. Build your legacy.</p>
-      <button onclick="alert('Welcome to Beyond Horizons!')">
-        ENTER THE WORLD
-      </button>
+<div class="app">
+<header>
+  <div class="brand">BEYOND <span>HORIZONS</span></div>
+  <div class="header-right">
+    <button class="coins" onclick="showScreen('wallet')">◈ <b id="coinCount">1200</b></button>
+    <button class="avatar" style="border:0" onclick="showScreen('profile')" aria-label="Profile">P</button>
+  </div>
+</header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">THE NEXT FRONTIER · SEASON 01</div>
+      <h1>YOUR WORLD.<br>YOUR LEGACY.</h1>
+      <p>Explore a changing world, team up with friends, and make your mark beyond the horizon.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="showScreen('play')">▶ PLAY NOW</button>
+        <button class="btn" onclick="showScreen('modes')">Explore modes ↗</button>
+      </div>
     </div>
-  </main>
-  <footer>BEYOND HORIZONS · GAME PROJECT</footer>
-</body>
-</html>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><strong>01</strong><span>YOUR LEVEL</span></div>
+    <div class="stat"><strong id="homeMatches">00</strong><span>TEST MATCHES</span></div>
+    <div class="stat"><strong>1200</strong><span>STARTER COINS*</span></div>
+  </div>
+
+  <div class="section-head"><h2>Choose your experience</h2><button class="btn small" onclick="showScreen('modes')">All modes →</button></div>
+  <div class="grid two">
+    <div class="card">
+      <div class="mode-art city">🏙️</div>
+      <span class="tag">EXPLORATION</span>
+      <h3 style="margin-top:10px">Open World</h3>
+      <p>Discover the city in this concept mode.</p>
+      <button class="btn small primary" onclick="selectMode('Open World')">Select mode</button>
+    </div>
+    <div class="card">
+      <div class="mode-art survival">🌲</div>
+      <span class="tag">SURVIVAL</span>
+      <h3 style="margin-top:10px">Frontier Survival</h3>
+      <p>Test your choices in a simulated mission.</p>
+      <button class="btn small primary" onclick="selectMode('Frontier Survival')">Select mode</button>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>From the community</h2><button class="btn small" onclick="showScreen('introduce')">Introduce →</button></div>
+  <div class="card">
+    <div class="row"><div class="avatar">BH</div><div class="grow"><b>Beyond Horizons</b><div class="muted">Official concept feed</div></div><span class="badge">DEMO</span></div>
+    <p>Welcome to the frontier. This is where player stories, community creations, and new discoveries will come together.</p>
+  </div>
+  <p class="muted">*Demo coins only. No real-money purchases are available.</p>
+</section>
+
+<section id="play" class="screen">
+  <div class="eyebrow">GAME CENTER</div><h1>Ready to explore?</h1>
+  <p>Choose a mode to enter a simulated match preview. No real multiplayer server is connected yet.</p>
+  <div class="card" style="margin:20px 0">
+    <div class="mode-art" style="height:150px">🌐</div>
+    <div class="row between wrap"><div><span class="tag">SELECTED MODE</span><h2 id="selectedMode" style="margin-top:10px">Open World</h2></div><span class="badge">PROTOTYPE</span></div>
+    <p id="modeDescription">Explore the world in a local game-flow preview.</p>
+    <button class="btn primary" style="width:100%" onclick="startMatch()">▶ ENTER SIMULATION</button>
+  </div>
+  <div id="matchResult" class="card" hidden>
+    <div class="eyebrow">SIMULATION STARTED</div>
+    <h2>Mission preview</h2>
+    <p id="matchMessage">Your demo mission is ready.</p>
+    <div class="actions"><button class="btn primary" onclick="finishMatch()">Complete demo mission</button><button class="btn" onclick="showScreen('home')">Return home</button></div>
+  </div>
+  <div class="notice">This prototype simulates the game flow only. It does not connect to other players or run a 3D match.</div>
+</section>
+
+<section id="modes" class="screen">
+  <div class="eyebrow">FIND YOUR FRONTIER</div><h1>Game modes</h1>
+  <p>Select a mode. Your choice will be used in the Play section.</p>
+  <div class="grid">
+    <div class="card"><div class="mode-art city">🏙️</div><h3>Open World</h3><p>Explore a futuristic city concept.</p><button class="btn primary small" onclick="selectMode('Open World')">Choose</button></div>
+    <div class="card"><div class="mode-art survival">🌲</div><h3>Frontier Survival</h3><p>Explore a wilderness setting.</p><button class="btn primary small" onclick="selectMode('Frontier Survival')">Choose</button></div>
+    <div class="card"><div class="mode-art arena">✨</div><h3>Training Arena</h3><p>Learn the interface in a practice concept.</p><button class="btn primary small" onclick="selectMode('Training Arena')">Choose</button></div>
+    <div class="card"><div class="mode-art">🧭</div><h3>Story Expedition</h3><p>Discover the world through missions.</p><button class="btn primary small" onclick="selectMode('Story Expedition')">Choose</button></div>
+  </div>
+</section>
+
+<section id="profile" class="screen">
+  <div class="eyebrow">PLAYER IDENTITY</div><h1>Your profile</h1>
+  <div class="card">
+    <div class="row"><div class="avatar" style="width:64px;height:64px;font-size:24px">P</div><div class="grow"><h2 style="margin:0">Frontier Player</h2><p style="margin:5px 0">Level 1 · Rookie Explorer</p><span class="badge">LOCAL DEMO PROFILE</span></div></div>
+    <hr><div class="row between"><b>Experience points</b><span id="xpText">35 / 100 XP</span></div><div class="progress"><span id="xpBar"></span></div>
+    <div class="stats"><div class="stat"><strong id="profileMatches">0</strong><span>MISSIONS</span></div><div class="stat"><strong>0</strong><span>WINS</span></div><div class="stat"><strong>1</strong><span>LEVEL</span></div></div>
+    <p>This profile is stored only in this page session. A secure account system is not connected.</p>
+  </div>
+  <div class="section-head"><h2>Player options</h2></div>
+  <div class="card"><button class="btn" style="width:100%" onclick="showScreen('settings')">⚙ Open settings</button></div>
+</section>
+
+<section id="wallet" class="screen">
+  <div class="eyebrow">VIRTUAL ECONOMY</div><h1>Coin wallet</h1>
+  <div class="card" style="background:linear-gradient(135deg,#342b18,#171d27)">
+    <p>DEMO BALANCE</p><h1 style="color:var(--gold)">◈ <span id="walletBalance">1200</span></h1>
+    <p>These coins are fictional prototype points. They have no cash value.</p>
+  </div>
+  <div class="notice">Real-money payments, deposits, withdrawals, and purchases are disabled in this prototype.</div>
+  <div class="section-head"><h2>Earn demo coins</h2></div>
+  <div class="card"><div class="row between"><div><b>Daily explorer reward</b><p>Collect 50 demo coins.</p></div><button class="btn gold small" id="dailyReward" onclick="claimReward()">Claim +50</button></div></div>
+  <div class="section-head"><h2>Spend on cosmetics</h2><button class="btn small" onclick="showScreen('cosmetics')">Browse →</button></div>
+  <p class="muted">Cosmetics are visual demo choices and don't change gameplay.</p>
+</section>
+
+<section id="cosmetics" class="screen">
+  <div class="eyebrow">MAKE IT YOURS</div><h1>Cosmetics</h1>
+  <p>Select a style to preview it. Demo purchases use your fictional coin balance.</p>
+  <div class="grid">
+    <div class="card"><div class="mode-art">🧥</div><h3>Explorer Jacket</h3><p>Cost: 250 ◈</p><button class="btn primary small" onclick="buyCosmetic('Explorer Jacket',250)">Unlock</button></div>
+    <div class="card"><div class="mode-art" style="background:linear-gradient(135deg,#344e79,#182238)">🪖</div><h3>Skyline Helmet</h3><p>Cost: 400 ◈</p><button class="btn primary small" onclick="buyCosmetic('Skyline Helmet',400)">Unlock</button></div>
+    <div class="card"><div class="mode-art" style="background:linear-gradient(135deg,#6c4c32,#1d1b20)">🥾</div><h3>Trail Boots</h3><p>Cost: 150 ◈</p><button class="btn primary small" onclick="buyCosmetic('Trail Boots',150)">Unlock</button></div>
+    <div class="card"><div class="mode-art" style="background:linear-gradient(135deg,#3d6d63,#182238)">✨</div><h3>Mint Trail Effect</h3><p>Cost: 300 ◈</p><button class="btn primary small" onclick="buyCosmetic('Mint Trail Effect',300)">Unlock</button></div>
+  </div>
+  <div class="section-head"><h2>Your collection</h2></div><div id="collection" class="card"><p class="muted">No cosmetics unlocked yet.</p></div>
+</section>
+
+<section id="introduce" class="screen">
+  <div class="eyebrow">COMMUNITY HUB</div><h1>Introduce</h1>
+  <p>Share a demo post, discover community ideas, and try the follow and like interactions.</p>
+  <div class="card">
+    <h3>Share an update</h3>
+    <textarea id="postInput" class="field" rows="3" maxlength="240" placeholder="What would you like to share with the community?"></textarea>
+    <button class="btn primary" onclick="publishPost()">Publish demo post</button>
+  </div>
+  <div class="section-head"><h2>Community feed</h2><span class="badge">SAMPLE CONTENT</span></div>
+  <div id="feed">
+    <article class="card feed-card">
+      <div class="row"><div class="avatar">NX</div><div class="grow"><b>NovaX</b><div class="muted">Community explorer · sample</div></div><button class="btn small" onclick="toggleFollow(this)">Follow</button></div>
+      <p class="post">My idea for the first map: a neon city with rooftop gardens and a huge central plaza.</p>
+      <div class="post-actions"><button class="btn small" onclick="toggleLike(this)">♡ Like <span>12</span></button><button class="btn small" onclick="showToast('Comments are not connected in this prototype.')">Comment</button></div>
+    </article>
+    <article class="card feed-card">
+      <div class="row"><div class="avatar">SK</div><div class="grow"><b>SkyKeeper</b><div class="muted">Community explorer · sample</div></div><button class="btn small" onclick="toggleFollow(this)">Follow</button></div>
+      <p class="post">I'd love a peaceful exploration mode where we can discover landmarks and take screenshots.</p>
+      <div class="post-actions"><button class="btn small" onclick="toggleLike(this)">♡ Like <span>8</span></button><button class="btn small" onclick="showToast('Comments are not connected in this prototype.')">Comment</button></div>
+    </article>
+  </div>
+  <div class="notice">Posts, likes, and follows are temporary page interactions. Public accounts, moderation tools, and online storage must be added before a real social network launches.</div>
+</section>
+
+<section id="settings" class="screen">
+  <div class="eyebrow">PERSONALISE YOUR EXPERIENCE</div><h1>Settings</h1>
+  <div class="card">
+    <div class="row between"><div><b>Music</b><p>Prototype preference only.</p></div><input class="toggle" type="checkbox" checked></div><hr>
+    <div class="row between"><div><b>Sound effects</b><p>Prototype preference only.</p></div><input class="toggle" type="checkbox" checked></div><hr>
+    <div class="row between"><div><b>Reduced animation</b><p>Use a simpler interface.</p></div><input id="reduceMotion" class="toggle" type="checkbox" onchange="setMotion(this.checked)"></div><hr>
+    <div class="row between"><div><b>Interface theme</b><p>Current theme: Midnight</p></div><span class="badge">MIDNIGHT</span></div>
+  </div>
+  <div class="section-head"><h2>Project information</h2></div>
+  <div class="card"><p><b>Beyond Horizons</b></p><p>Interactive web prototype · Version 1.0</p><p>Built as the first step toward a larger game project.</p><button class="btn danger" onclick="resetDemo()">Reset demo progress</button></div>
+</section>
+
+<section id="noticeScreen" class="screen">
+  <div class="eyebrow">BEYOND HORIZONS</div><h1 id="noticeTitle">Notice</h1><p id="noticeText"></p><button class="btn primary" onclick="showScreen('home')">Back to home</button>
+</section>
+</main>
+
+<footer>BEYOND HORIZONS · GAME PROTOTYPE<br>Demo features only · No real-money transactions</footer>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+ <div class="nav-inner">
+  <button class="nav-btn active" data-screen="home" onclick="showScreen('home')"><span class="ico">⌂</span>Home</button>
+  <button class="nav-btn" data-screen="play" onclick="showScreen('play')"><span class="ico">▷</span>Play</button>
+  <button class="nav-btn" data-screen="modes" onclick="showScreen('modes')"><span class="ico">◇</span>Modes</button>
+  <button class="nav-btn" data-screen="introduce" onclick="showScreen('introduce')"><span class="ico">◎</span>Introduce</button>
+  <button class="nav-btn" data-screen="profile" onclick="showScreen('profile')"><span class="ico">♙</span>Profile</button>
+ </div>
+</nav>
+<div id="toast" role="status" aria-live="polite" style="display:none;position:fixed;left:12px;right:12px;bottom:92px;z-index:20;background:#26384a;border:1px solid #526a80;padding:14px;border-radius:10px;text-align:center;color:white"></div>
+
+<script>
+let coins=1200, matches=0, xp=35, mode='Open World';
+let claimed=false;
+let owned=[];
+let postNumber=0;
+
+const descriptions={
+ 'Open World':'Explore a futuristic city in this local demo preview.',
+ 'Frontier Survival':'Explore a wilderness setting in this simulated mission.',
+ 'Training Arena':'Practice navigating the interface in a training preview.',
+ 'Story Expedition':'Preview a story-driven exploration mission.'
+};
+
+function showScreen(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+ window.scrollTo({top:0,behavior:'auto'});
+ if(id==='play') updateMode();
+ updateBalances();
+}
+function showToast(message){
+ const el=document.getElementById('toast');
+ el.textContent=message;el.style.display='block';
+ if(showToast.timer)clearTimeout(showToast.timer);
+ showToast.timer=setTimeout(()=>el.style.display='none',2600);
+}
+function selectMode(name){
+ mode=name;updateMode();showScreen('play');
+ showToast(name+' selected.');
+}
+function updateMode(){
+ document.getElementById('selectedMode').textContent=mode;
+ document.getElementById('modeDescription').textContent=descriptions[mode]||'Explore this 
